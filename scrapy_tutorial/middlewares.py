@@ -7,6 +7,23 @@ from scrapy import signals
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
+from selenium import webdriver
+from scrapy.http import HtmlResponse
+
+
+class SeleniumMiddleware():
+
+    def process_request(self, request, spider):
+        if "https://unsplash.com/s/photos/book" != request.url:
+            return
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        options.add_argument("--disable-gpu")
+        browser = webdriver.Chrome(chrome_options=options)
+        browser.get(request.url)
+        source = browser.page_source
+        browser.quit()
+        return HtmlResponse(url=request.url, body=source, request=request, encoding='utf-8', status=200)
 
 
 class ScrapyTutorialSpiderMiddleware:

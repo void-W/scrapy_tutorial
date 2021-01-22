@@ -14,6 +14,8 @@ NEWSPIDER_MODULE = 'scrapy_tutorial.spiders'
 
 IMAGES_STORE = r'.\image'
 ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy_tutorial.middlewares.SeleniumMiddleware': 543, }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scrapy_tutorial (+http://www.yourdomain.com)'
